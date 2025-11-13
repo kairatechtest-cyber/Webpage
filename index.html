@@ -1,362 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kaira Technologies | Dashboard</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kaira Technologies | Dashboard & Reports</title>
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- AOS Animation -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      display: flex;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #e8f0ff, #ffffff);
-      overflow-x: hidden;
-    }
+<!-- FONT AWESOME -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    /* Sidebar */
-    .sidebar {
-      width: 270px;
-      background: linear-gradient(180deg, #003b73 0%, #29a0ad 100%);
-      color: white;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      padding-top: 20px;
-      box-shadow: 5px 0 20px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-    }
+<style>
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    .sidebar h2 {
-      text-align: center;
-      font-weight: 700;
-      font-size: 1.6rem;
-      margin-bottom: 30px;
-      background: linear-gradient(to right, #00c8ff, #00a2ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: 1px;
-    }
+body {
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    background: #f1f4f9;
+    overflow-x: hidden;
+}
 
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      padding: 12px 25px;
-      font-size: 1.05rem;
-      transition: all 0.3s ease;
-      border-left: 4px solid transparent;
-      position: relative;
-    }
+/* Background Image Behind Main Content */
+.main-content {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    min-height: 100vh;
 
-    .sidebar a i {
-      margin-right: 12px;
-      font-size: 1.2rem;
-      transition: 0.3s;
-    }
+    background: url("https://i.pinimg.com/1200x/e7/81/06/e78106881aa09dad26de203313739d3c.jpg")
+                no-repeat center center fixed;
+    background-size:cover;
+}
 
-    .sidebar a:hover i {
-      transform: scale(1.2);
-      color: #00c8ff;
-    }
+/* Transparent white overlay for readability */
+.main-content::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 260px;
+    width: calc(100% - 260px);
+    height: 100%;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+}
 
-    .sidebar a:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-left: 4px solid #00c8ff;
-      box-shadow: inset 0 0 8px rgba(0, 200, 255, 0.4);
-      transform: translateX(3px);
-    }
+/* ======================================================================
+   SIDEBAR (AdminDek Style)
+====================================================================== */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #1b2430;
+    color: white;
+    position: fixed;
+    top: 0; left: 0;
+    padding: 25px 0;
+    overflow-y: auto;
+    border-right: 1px solid #2f3a4c;
+}
 
-    .sidebar a.active {
-      background: rgba(255, 255, 255, 0.15);
-      border-left: 4px solid #00c8ff;
-      color: #00c8ff;
-    }
+.sidebar-logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 0 25px;
+    margin-bottom: 25px;
+    color: #fff;
+}
 
-    /* Dropdown */
-    .dropdown-btn::after {
-      content: "\f078";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      float: right;
-      font-size: 0.8rem;
-      transition: 0.3s ease;
-    }
+/* Section Title */
+.sidebar-section {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    padding: 10px 25px;
+    color: #9aa4b2;
+}
 
-    .dropdown-btn.active::after {
-      transform: rotate(180deg);
-    }
+/* Menu Item */
+.menu-item {
+    padding: 12px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #dce3eb;
+    transition: 0.2s;
+}
 
-    .dropdown-container {
-      display: none;
-      background: rgba(0, 0, 0, 0.1);
-      padding-left: 10px;
-      animation: slideDown 0.4s ease forwards;
-    }
+.menu-item i {
+    width: 20px;
+    opacity: 0.8;
+    font-size: 1.1rem;
+}
 
-    .dropdown-container a {
-      padding-left: 45px;
-      font-size: 0.95rem;
-      color: #d6e6ff;
-    }
+.menu-item:hover {
+    background: #2d3647;
+    color: #fff;
+}
 
-    .dropdown-container a:hover {
-      color: #00c8ff;
-    }
+/* Dropdown arrow */
+.menu-item .arrow {
+    margin-left: auto;
+    transition: 0.3s;
+}
 
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.rotate {
+    transform: rotate(90deg);
+}
 
-    /* Ripple Effect */
-    .sidebar a::before {
-      content: "";
-      position: absolute;
-      width: 0;
-      height: 100%;
-      top: 0;
-      left: 0;
-      background: rgba(255, 255, 255, 0.2);
-      z-index: 0;
-      transition: width 0.4s ease;
-    }
+/* Dropdown container */
+.dropdown {
+    display: none;
+    padding-left: 55px;
+    background: #222b38;
+}
 
-    .sidebar a:hover::before {
-      width: 100%;
-    }
+.dropdown a {
+    display: block;
+    padding: 8px 0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+}
 
-    /* Main Content */
-    .main-content {
-      margin-left: 270px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+.dropdown a:hover {
+    color: #4fd1ff;
+}
 
-    header {
-      background: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 40px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
+/* ======================================================================
+   MAIN CONTENT ELEMENTS
+====================================================================== */
 
-    header img {
-      height: 60px;
-      margin-right: 20px;
-    }
+/* Header */
+header {
+    background: rgba(255,255,255,0.9);
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
 
-    header h1 {
-      font-size: 1.8rem;
-      color: #004c91;
-      font-weight: 600;
-    }
+.header-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1c2d4a;
+}
 
-    .company-link a {
-      color: #004c91;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
+.header-right {
+    text-align: right;
+}
 
-    .company-link a:hover {
-      color: #00c8ff;
-    }
+#greetingText {
+    font-weight: 600;
+    color: #1c2d4a;
+}
 
-    /* Greeting Section */
-    .greeting-section {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: url('https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-      position: relative;
-      color: white;
-      text-align: center;
-      padding: 50px 20px;
-    }
+#timeText {
+    color: #567089;
+    font-size: 0.9rem;
+}
 
-    .greeting-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      z-index: 0;
-    }
+/* Hero Banner */
+.hero {
+    margin: 40px;
+    background: rgba(255,255,255,0.75);
+    padding: 40px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    color: #1b2430;
+}
 
-    .greeting-content {
-      z-index: 1;
-      animation: fadeInUp 1.5s ease;
-    }
+/* ===== WEATHER WIDGET EMBED (Auto Expand + Fixed Position) ===== */
+.weather-widget-container {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 50;
+}
 
-    .greeting-content h2 {
-      font-size: 2.2rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
+.weather-iframe {
+  width: 260px;
+  height: 130px;
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  transition: all 0.4s ease-in-out;
+  background: transparent;
+  overflow: visible;
+}
 
-    .clock {
-      margin-top: 15px;
-      font-size: 1.2rem;
-      color: #00c8ff;
-      font-weight: 500;
-    }
+.weather-iframe.expanded {
+  width: 420px;
+  height: 680px;
+  border-radius: 24px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+  transform: translateY(-60px);
+}
 
-    footer {
-      background: #29a0ad;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-      font-size: 14px;
-    }
+.weather-iframe:hover {
+  transform: translateY(-3px);
+}
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+/* Fade effect */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
 
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-      }
-      .main-content {
-        margin-left: 0;
-      }
-    }
-  </style>
+.weather-iframe.expanded {
+  animation: fadeIn 0.5s ease;
+}
+
+
+</style>
 </head>
 
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar" data-aos="fade-right">
-    <h2>Menu</h2>
-    <a href="#" class="menu-item" onclick="openMixer()"><i class="fa-solid fa-flask"></i> Mixer</a>
-    <a href="#" class="menu-item" onclick="openWater()"><i class="fa-solid fa-droplet"></i> Water</a>
 
-    <a href="javascript:void(0)" class="dropdown-btn"><i class="fa-solid fa-cog"></i> Tyre</a>
-    <div class="dropdown-container">
-      <a href="#" onclick="openTBM1to6()">TBM 1–6</a>
-      <a href="#" onclick="openTBM7to12()">TBM 7–12</a>
-      <a href="#" onclick="openTBM13to18()">TBM 13–18</a>
-      <a href="#" onclick="openTBM1()">TBM 1</a>
-      <a href="#" onclick="openTBM4()">TBM 4</a>
-    </div>
-  </div>
+<!-- ======================================================================
+     SIDEBAR
+====================================================================== -->
+<div class="sidebar">
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <header data-aos="fade-down">
-      <div class="d-flex align-items-center">
-        <img src="https://kaira-technologies.com/wp-content/uploads/2023/01/logo-2.png" alt="Kaira Logo">
-        <h1>Kaira Technologies - Dashboard</h1>
-        
-      </div>
-      <div class="company-link">
-        <a href="https://kaira-technologies.com/" target="_blank"><i class="fa-solid fa-globe"></i> Visit Company Website</a>
-      </div>
-    </header>
+    <div class="sidebar-logo">Industry</div>
 
-    <div class="greeting-section" data-aos="zoom-in">
-      <div class="greeting-overlay"></div>
-      <div class="greeting-content">
-        <h2 id="greeting">Welcome to Kaira Technologies Dashboard</h2>
-        <p>Access all dashboards from the left menu to explore real-time data insights.</p>
-        <div class="clock" id="clock"></div>
-      </div>
+    <div class="sidebar-section">Navigation</div>
+
+    <!-- WATER -->
+    <div class="menu-item" onclick="toggleMenu('waterMenu')">
+        <i class="fa-solid fa-droplet"></i> Water
+        <i class="fa-solid fa-chevron-right arrow"></i>
     </div>
 
-    <footer>
-      © 2025 Kaira Technologies. All rights reserved.
-    </footer>
-  </div>
+    <div id="waterMenu" class="dropdown">
+        <a href="https://kairatechtest.grafana.net/public-dashboards/24e17fcff04643189b289417a62616de"
+           target="_blank">⚪ ETP Dashboard</a>
+    </div>
 
-  <!-- JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 900, easing: 'ease-in-out', once: true });
+    <!-- TYRE -->
+    <div class="menu-item" onclick="toggleMenu('tyreMenu')">
+        <i class="fa-solid fa-industry"></i> Tyre
+        <i class="fa-solid fa-chevron-right arrow"></i>
+    </div>
 
-    // Dashboard Links
-    const links = {
-      mixer: "https://kairatechtest.grafana.net/public-dashboards/7ef1f69170b242388cc89a1a99a3dfbf",
-      water: "https://kairatechtest.grafana.net/public-dashboards/24e17fcff04643189b289417a62616de",
-      tbm1to6: "https://kairatechtest.grafana.net/public-dashboards/d01b24c423114dbab739cca95faf266b",
-      tbm7to12: "https://kairatechtest.grafana.net/public-dashboards/c3ac9cebe3e54e9e827d57c64b3d1bbe",
-      tbm13to18: "https://kairatechtest.grafana.net/public-dashboards/7c9a10671c624377bbac5c7c3c9d85e8",
-      tbm1: "https://kairatechtest.grafana.net/public-dashboards/8b7f340c395c4fc184c66a474a395c35",
-      tbm4: "https://kairatechtest.grafana.net/public-dashboards/a802d6af5cd043149abfba1726c17fcb"
-    };
+    <div id="tyreMenu" class="dropdown">
+        <a href="https://kairatechtest.grafana.net/public-dashboards/7ef1f69170b242388cc89a1a99a3dfbf"
+           target="_blank">⚪ Mixer Dashboard</a>
 
-    // Open links
-    function openMixer() { window.open(links.mixer, "_blank"); }
-    function openWater() { window.open(links.water, "_blank"); }
-    function openTBM1to6() { window.open(links.tbm1to6, "_blank"); }
-    function openTBM7to12() { window.open(links.tbm7to12, "_blank"); }
-    function openTBM13to18() { window.open(links.tbm13to18, "_blank"); }
-    function openTBM1() { window.open(links.tbm1, "_blank"); }
-    function openTBM4() { window.open(links.tbm4, "_blank"); }
+        <!-- TBM -->
+        <div class="menu-item" style="padding-left:0;" onclick="toggleMenu('tbmMenu')">
+            <i class="fa-solid fa-list"></i> TBM
+            <i class="fa-solid fa-chevron-right arrow"></i>
+        </div>
 
-    // Dropdown Animation
-    const dropdown = document.querySelector(".dropdown-btn");
-    dropdown.addEventListener("click", function () {
-      this.classList.toggle("active");
-      const container = this.nextElementSibling;
-      container.style.display = container.style.display === "block" ? "none" : "block";
-    });
+        <div id="tbmMenu" class="dropdown">
+            <a href="https://kairatechtest.grafana.net/public-dashboards/d01b24c423114dbab739cca95faf266b" target="_blank">TBM 1–6</a>
+            <a href="https://kairatechtest.grafana.net/public-dashboards/c3ac9cebe3e54e9e827d57c64b3d1bbe" target="_blank">TBM 7–12</a>
+            <a href="https://kairatechtest.grafana.net/public-dashboards/7c9a10671c624377bbac5c7c3c9d85e8" target="_blank">TBM 13–18</a>
+        </div>
+    </div>
 
-    // Active menu highlight
-    const menuItems = document.querySelectorAll(".menu-item");
-    menuItems.forEach(item => {
-      item.addEventListener("click", () => {
-        menuItems.forEach(i => i.classList.remove("active"));
-        item.classList.add("active");
-      });
-    });
+</div>
 
-    // Dynamic Greeting
-    function updateGreeting() {
-      const now = new Date();
-      const hour = now.getHours();
-      const greeting = document.getElementById("greeting");
-      let message = "Welcome to Kaira Technologies Dashboard";
-      if (hour < 12) message = "Good Morning ☀️";
-      else if (hour < 18) message = "Good Afternoon 🌤️";
-      else message = "Good Evening 🌙";
-      greeting.textContent = message;
-    }
+<!-- ======================================================================
+     MAIN CONTENT
+====================================================================== -->
+<div class="main-content">
 
-    // Live Clock
-    function updateClock() {
-      const now = new Date();
-      const clock = document.getElementById("clock");
-      clock.textContent = now.toLocaleTimeString();
-    }
+<header>
+    <img src="https://kaira-technologies.com/wp-content/uploads/2023/01/logo-2.png" height="45">
 
-    setInterval(updateClock, 1000);
-    updateGreeting();
-    updateClock();
-  </script>
-</body>
+    <div class="header-title">KAIRA Technologies – Dashboard & Reports</div>
+
+    <div class="header-right">
+        <div id="greetingText"></div>
+        <div id="timeText"></div>
+        <a href="https://kaira-technologies.com/" class="text-primary" target="_blank">
+            <i class="fa-solid fa-globe"></i> Visit Website
+        </a>
+    </div>
+</header>
+
+<div class="hero">
+    Explore Real-Time Dashboards & Reports
+</div>
+
+<!-- WEATHER WIDGET -->
+<div class="weather-widget-container">
+  <iframe 
+    src="weather-widget.html"
+    class="weather-iframe"
+    title="Live Weather Widget"
+    loading="lazy"
+    scrolling="no">
+  </iframe>
+</div>
+
+</div>
+
+<!-- ======================================================================
+     JAVASCRIPT
+====================================================================== -->
+<script>
+function toggleMenu(id) {
+    const section = document.getElementById(id);
+    const arrow = section.previousElementSibling.querySelector(".arrow");
+
+    section.style.display = section.style.display === "block" ? "none" : "block";
+    arrow.classList.toggle("rotate");
+}
+
+// Greeting + Live Time
+function updateGreeting() {
+    const now = new Date();
+    const hr = now.getHours();
+
+    let greet = hr < 12 ? "Good Morning ☀️" :
+                hr < 18 ? "Good Afternoon 🌤️" :
+                          "Good Evening 🌙";
+
+    document.getElementById("greetingText").textContent = greet;
+    document.getElementById("timeText").textContent = now.toLocaleTimeString();
+}
+setInterval(updateGreeting, 1000);
+updateGreeting();
+</script>
+<script>
+window.addEventListener("message", (event) => {
+  if (!event.data || !event.data.type) return;
+  const iframe = document.querySelector(".weather-iframe");
+
+  if (event.data.type === "weatherExpand") {
+    iframe.classList.add("expanded");
+  } 
+  else if (event.data.type === "weatherCollapse") {
+    iframe.classList.remove("expanded");
+  }
+});
+
+</script>
 </html>
